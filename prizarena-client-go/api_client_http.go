@@ -15,6 +15,8 @@ const (
 	contentTypeJson          = "application/json"
 	ApiEndpointNewTournament = "/api/new-tournament"
 	ApiEndpointPlayCompleted = "/api/play-completed"
+	ApiEndpointUserTournaments = "/api/user/tournaments"
+	ApiEndpointTournamentInfo = "/api/tournament/info"
 )
 
 func NewHttpApiClient(httpClient *http.Client, token string) prizarena_interfaces.ApiClient {
@@ -64,7 +66,7 @@ func (apiClient httpApiClient) post(endpoint string, body io.Reader, response in
 	return
 }
 
-func (apiClient httpApiClient) NewTournament(c context.Context, newTournament prizarena_interfaces.NewTournament) (tournament prizarena_interfaces.Tournament, err error) {
+func (apiClient httpApiClient) NewTournament(c context.Context, newTournament prizarena_interfaces.NewTournament) (tournament prizarena_interfaces.TournamentDto, err error) {
 	body := strings.Reader{}
 	err = apiClient.post(ApiEndpointNewTournament, &body, &tournament)
 	return

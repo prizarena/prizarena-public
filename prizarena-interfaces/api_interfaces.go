@@ -5,7 +5,7 @@ import (
 )
 
 type ApiClient interface {
-	NewTournament(c context.Context, newTournament NewTournament) (tournament Tournament, err error)
+	NewTournament(c context.Context, newTournament NewTournament) (tournament TournamentDto, err error)
 	PlayCompleted(c context.Context, e PlayCompletedEvent) (err error)
 }
 
