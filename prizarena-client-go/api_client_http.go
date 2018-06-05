@@ -9,28 +9,32 @@ import (
 	"encoding/json"
 	"github.com/pkg/errors"
 	"fmt"
-)
+	)
 
 const (
-	contentTypeJson          = "application/json"
-	ApiEndpointNewTournament = "/api/new-tournament"
-	ApiEndpointPlayCompleted = "/api/play-completed"
+	contentTypeJson            = "application/json"
+	ApiEndpointNewTournament   = "/api/new-tournament"
+	ApiEndpointPlayCompleted   = "/api/play-completed"
 	ApiEndpointUserTournaments = "/api/user/tournaments"
-	ApiEndpointTournamentInfo = "/api/tournament/info"
+	ApiEndpointTournamentInfo  = "/api/tournament/info"
 )
 
-func NewHttpApiClient(httpClient *http.Client, token string) prizarena_interfaces.ApiClient {
-	return httpApiClient{httpClient: httpClient, token: token}
+func NewHttpApiClient(httpClient *http.Client, server string, token string) prizarena_interfaces.ApiClient {
+	if server == "" {
+		server = "https://prizarena.com/api"
+	}
+	return httpApiClient{httpClient: httpClient, server: server, token: token}
 }
 
 type httpApiClient struct {
 	httpClient *http.Client
+	server     string
 	token      string
 }
 
 func (apiClient httpApiClient) post(endpoint string, body io.Reader, response interface{}) (err error) {
 	var resp *http.Response
-	if resp, err = apiClient.httpClient.Post(endpoint, contentTypeJson, &body); err != nil {
+	if resp, err = apiClient.httpClient.Post(apiClient.server + endpoint, contentTypeJson, &body); err != nil {
 		return
 	}
 	defer resp.Body.Close()
