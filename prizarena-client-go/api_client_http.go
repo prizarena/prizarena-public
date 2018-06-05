@@ -34,7 +34,7 @@ type httpApiClient struct {
 
 func (apiClient httpApiClient) post(endpoint string, body io.Reader, response interface{}) (err error) {
 	var resp *http.Response
-	if resp, err = apiClient.httpClient.Post(apiClient.server + endpoint, contentTypeJson, &body); err != nil {
+	if resp, err = apiClient.httpClient.Post(apiClient.server + endpoint, contentTypeJson, body); err != nil {
 		return
 	}
 	defer resp.Body.Close()
