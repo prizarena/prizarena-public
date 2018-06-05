@@ -8,3 +8,7 @@ type TournamentDto struct {
 	GameID string
 	Sponsor Sponsor
 }
+
+type NewTournamentResponseDto struct {
+	Tournament TournamentDto
+}
