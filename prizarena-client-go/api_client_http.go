@@ -19,6 +19,7 @@ const (
 	ApiEndpointPairWithStranger   = "/api/stranger/pair"
 	ApiEndpointPairedWithStranger = "/api/stranger/paired"
 	ApiEndpointUserTournaments    = "/api/user/tournaments"
+	ApiEndpointLeaveTournament    = "/api/leave/tournament"
 	ApiEndpointTournamentInfo     = "/api/tournament/info"
 )
 
@@ -129,4 +130,8 @@ func (apiClient httpApiClient) PairWithStranger(c context.Context, payload priza
 func (apiClient httpApiClient) PairedWithStranger(c context.Context, payload prizarena_interfaces.PairedWithStrangerPayload) (response prizarena_interfaces.PairedWithStrangerResponse, err error) {
 	err = apiClient.post(ApiEndpointPairedWithStranger, &payload, &response)
 	return
+}
+
+func (apiClient httpApiClient) LeaveTournament(c context.Context, battleID string) error {
+	return apiClient.post(ApiEndpointLeaveTournament, battleID, nil)
 }

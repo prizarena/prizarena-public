@@ -5,6 +5,7 @@ import (
 )
 
 type ApiClient interface {
+	LeaveTournament(c context.Context, battleID string) error
 	NewTournament(c context.Context, newTournament NewTournamentPayload) (response NewTournamentResponse, err error)
 	PlayCompleted(c context.Context, payload PlayCompletedPayload) (response PlayCompletedResponse, err error)
 

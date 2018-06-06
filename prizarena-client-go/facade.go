@@ -20,10 +20,13 @@ func (facade facade) MakeMoveAgainstStranger(
 	// now time.Time,
 	tournamentID string,
 	gameUserID string,
-	onRivalFound func(rivalUserID string) error,
+	move *prizarena_interfaces.MoveDto,
+	onRivalFound func(rivalUserID string, rivalMove *prizarena_interfaces.MoveDto) error,
 	onStranger func() error,
 ) (err error) {
-
+	if move == nil && onStranger == nil {
+		panic("Either 'move' or 'onStranger' should be defined.")
+	}
 	pairPayload := prizarena_interfaces.PairWithStrangerPayload{
 		TournamentID: tournamentID,
 		GameUserID: gameUserID,
@@ -35,9 +38,11 @@ func (facade facade) MakeMoveAgainstStranger(
 	}
 
 	if response.RivalGameUserID == "" {
-		onStranger()
+		if onStranger != nil {
+			onStranger()
+		}
 	} else {
-		if err = onRivalFound(response.RivalGameUserID); err != nil {
+		if err = onRivalFound(response.RivalGameUserID, response.RivalMove); err != nil {
 			return err
 		}
 		pairedPayload := prizarena_interfaces.PairedWithStrangerPayload{
