@@ -7,7 +7,7 @@ import (
 )
 
 type NewTournament struct {
-	GameID string
+	CreatorGameUserID string
 	Name string
 	Starts time.Time
 	Ends time.Time

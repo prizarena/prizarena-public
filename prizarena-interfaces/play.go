@@ -5,6 +5,7 @@ package prizarena_interfaces
 type Impact struct {
 	UserID string
 	Points int
+	Result string // options: win|lost|draw
 }
 
 type PlayCompletedEvent struct {
@@ -19,19 +20,19 @@ type PlayCompletedResponse struct {
 
 type PlayCompletedTournament struct {
 	TournamentDto
-	TournamentUserStats
+	TournamentStats
+	Players []ContestantStats `json:",omitempty"`
 }
 
-type TournamentUserStats struct {
-	ContestantsCount   int
-	PlaysCount         int
-	WinsCount          int                    `json:",omitempty"`
-	DrawsCount         int                    `json:",omitempty"`
-	Position           int                    `json:",omitempty"`
-	ClosestContestants []TournamentContestant `json:",omitempty"`
+type TournamentStats struct {
+	ContestantsCount int
+	PlaysCount       int
 }
 
-type TournamentContestant struct {
-	Position int
-	Name     string
+type ContestantStats struct {
+	GameUserID string
+	Position   int
+	PlaysCount int
+	WinsCount  int `json:",omitempty"`
+	DrawsCount int `json:",omitempty"`
 }
