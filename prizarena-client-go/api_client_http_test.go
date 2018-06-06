@@ -44,7 +44,7 @@ func TestHttpApiClient_NewTournament(t *testing.T) {
 	const gameID = "test-game"
 	client := NewHttpApiClient(http.DefaultClient, ts.URL, gameID, secureToken)
 	c := context.Background()
-	response, err := client.NewTournament(c, prizarena_interfaces.NewTournament{})
+	response, err := client.NewTournament(c, prizarena_interfaces.NewTournamentPayload{})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -80,7 +80,7 @@ func TestHttpApiClient_PlayCompleted(t *testing.T) {
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
-		e := prizarena_interfaces.PlayCompletedEvent{}
+		e := prizarena_interfaces.PlayCompletedPayload{}
 		err := json.NewDecoder(r.Body).Decode(&e)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
@@ -101,7 +101,7 @@ func TestHttpApiClient_PlayCompleted(t *testing.T) {
 		response prizarena_interfaces.PlayCompletedResponse
 		err      error
 	)
-	response, err = client.PlayCompleted(c, prizarena_interfaces.PlayCompletedEvent{TournamentID: "a1b2", PlayID: "play123"})
+	response, err = client.PlayCompleted(c, prizarena_interfaces.PlayCompletedPayload{TournamentID: "a1b2", PlayID: "play123"})
 	if err != nil {
 		t.Fatal(err)
 	}

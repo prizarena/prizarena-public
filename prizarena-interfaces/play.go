@@ -8,7 +8,7 @@ type Impact struct {
 	Result string // options: win|lost|draw
 }
 
-type PlayCompletedEvent struct {
+type PlayCompletedPayload struct {
 	PlayID       string
 	TournamentID string `json:",omitempty"`
 	Impacts      []Impact

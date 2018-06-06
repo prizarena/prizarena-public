@@ -9,6 +9,6 @@ type TournamentDto struct {
 	Sponsor Sponsor
 }
 
-type NewTournamentResponseDto struct {
+type NewTournamentResponse struct {
 	Tournament TournamentDto
 }

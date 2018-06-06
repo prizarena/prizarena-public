@@ -5,7 +5,10 @@ import (
 )
 
 type ApiClient interface {
-	NewTournament(c context.Context, newTournament NewTournament) (response NewTournamentResponseDto, err error)
-	PlayCompleted(c context.Context, e PlayCompletedEvent) (response PlayCompletedResponse, err error)
+	NewTournament(c context.Context, newTournament NewTournamentPayload) (response NewTournamentResponse, err error)
+	PlayCompleted(c context.Context, payload PlayCompletedPayload) (response PlayCompletedResponse, err error)
+
+	PairWithStranger(c context.Context, payload PairWithStrangerPayload) (response PairWithStrangerResponse, err error)
+	PairedWithStranger(c context.Context, payload PairedWithStrangerPayload) (response PairedWithStrangerResponse, err error)
 }
 

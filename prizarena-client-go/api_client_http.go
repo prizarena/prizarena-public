@@ -13,11 +13,13 @@ import (
 )
 
 const (
-	contentTypeJson            = "application/json"
-	ApiEndpointNewTournament   = "/api/new-tournament"
-	ApiEndpointPlayCompleted   = "/api/play-completed"
-	ApiEndpointUserTournaments = "/api/user/tournaments"
-	ApiEndpointTournamentInfo  = "/api/tournament/info"
+	contentTypeJson               = "application/json"
+	ApiEndpointNewTournament      = "/api/new-tournament"
+	ApiEndpointPlayCompleted      = "/api/play-completed"
+	ApiEndpointPairWithStranger   = "/api/stranger/pair"
+	ApiEndpointPairedWithStranger = "/api/stranger/paired"
+	ApiEndpointUserTournaments    = "/api/user/tournaments"
+	ApiEndpointTournamentInfo     = "/api/tournament/info"
 )
 
 func NewHttpApiClient(httpClient *http.Client, server, gameID, token string) httpApiClient {
@@ -37,6 +39,8 @@ type httpApiClient struct {
 	token      string
 }
 
+var _ prizarena_interfaces.ApiClient = (*httpApiClient)(nil)
+
 func (apiClient httpApiClient) post(endpoint string, reqData interface{}, response interface{}) (err error) {
 	var (
 		req  *http.Request
@@ -55,7 +59,7 @@ func (apiClient httpApiClient) post(endpoint string, reqData interface{}, respon
 			return errors.WithMessage(err, "failed to encode Authorization header to base54")
 		}
 		encoder.Close()
-		req.Header.Add("Authorization", "Basic " + buf.String())
+		req.Header.Add("Authorization", "Basic "+buf.String())
 	}
 
 	if resp, err = apiClient.httpClient.Do(req); err != nil {
@@ -106,13 +110,23 @@ func (apiClient httpApiClient) post(endpoint string, reqData interface{}, respon
 	return
 }
 
-func (apiClient httpApiClient) NewTournament(c context.Context, newTournament prizarena_interfaces.NewTournament) (response prizarena_interfaces.NewTournamentResponseDto, err error) {
+func (apiClient httpApiClient) NewTournament(c context.Context, newTournament prizarena_interfaces.NewTournamentPayload) (response prizarena_interfaces.NewTournamentResponse, err error) {
 	body := strings.Reader{}
 	err = apiClient.post(ApiEndpointNewTournament, &body, &response)
 	return
 }
 
-func (apiClient httpApiClient) PlayCompleted(c context.Context, e prizarena_interfaces.PlayCompletedEvent) (response prizarena_interfaces.PlayCompletedResponse, err error) {
+func (apiClient httpApiClient) PlayCompleted(c context.Context, e prizarena_interfaces.PlayCompletedPayload) (response prizarena_interfaces.PlayCompletedResponse, err error) {
 	err = apiClient.post(ApiEndpointPlayCompleted, &e, &response)
+	return
+}
+
+func (apiClient httpApiClient) PairWithStranger(c context.Context, payload prizarena_interfaces.PairWithStrangerPayload) (response prizarena_interfaces.PairWithStrangerResponse, err error) {
+	err = apiClient.post(ApiEndpointPairWithStranger, &payload, &response)
+	return
+}
+
+func (apiClient httpApiClient) PairedWithStranger(c context.Context, payload prizarena_interfaces.PairedWithStrangerPayload) (response prizarena_interfaces.PairedWithStrangerResponse, err error) {
+	err = apiClient.post(ApiEndpointPairedWithStranger, &payload, &response)
 	return
 }

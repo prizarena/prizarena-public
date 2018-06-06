@@ -6,7 +6,7 @@ import (
 	"net/url"
 )
 
-type NewTournament struct {
+type NewTournamentPayload struct {
 	CreatorGameUserID string
 	Name string
 	Starts time.Time
