@@ -1,0 +1,7 @@
+Emoji used in the project.
+
+⚔️- crossed words
+🏆 - tropphy, prize
+📣 - megaphone, share
+💸 - money with wings
+🔓 - unlocked, open lock
