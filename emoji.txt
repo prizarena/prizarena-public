@@ -5,3 +5,4 @@ Emoji used in the project.
 📣 - megaphone, share
 💸 - money with wings
 🔓 - unlocked, open lock
+🎮 - game joystick

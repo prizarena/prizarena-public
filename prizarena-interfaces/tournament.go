@@ -18,6 +18,7 @@ type NewTournamentResponse struct {
 	Tournament TournamentDto
 }
 
+// IsMonthlyTournamentID returns true if
 func IsMonthlyTournamentID(tournamentID string) bool {
 	if len(tournamentID) <= 7 || strings.Count(tournamentID, ":") != 1 {
 		return false
