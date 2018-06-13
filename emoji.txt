@@ -6,3 +6,5 @@ Emoji used in the project.
 💸 - money with wings
 🔓 - unlocked, open lock
 🎮 - game joystick
+📇 - card index (list)
+🔙 - back arrow
