@@ -3,6 +3,7 @@ package prizarena_interfaces
 import (
 	"strings"
 	"strconv"
+	"fmt"
 )
 
 const MonthlyTournamentIDFormat = "200601"
@@ -29,4 +30,18 @@ func IsMonthlyTournamentID(tournamentID string) bool {
 		}
 	}
 	return false
+}
+
+func GetUrlForOpeningTournamentInGameTelegramBot(bot, tournamentID, referral string) string {
+	var gameTournamentID string
+	if i := strings.Index(tournamentID, ":"); i >= 0 {
+		gameTournamentID = tournamentID[i:]
+	} else {
+		gameTournamentID = tournamentID
+	}
+	s := fmt.Sprintf("https://t.me/%v?start=tornament-%v", bot, gameTournamentID)
+	if referral != "" {
+		s += "__ref-" + referral
+	}
+	return s
 }
