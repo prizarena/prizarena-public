@@ -35,11 +35,11 @@ func IsMonthlyTournamentID(tournamentID string) bool {
 func GetUrlForOpeningTournamentInGameTelegramBot(bot, tournamentID, referral string) string {
 	var gameTournamentID string
 	if i := strings.Index(tournamentID, ":"); i >= 0 {
-		gameTournamentID = tournamentID[i:]
+		gameTournamentID = tournamentID[i+1:]
 	} else {
 		gameTournamentID = tournamentID
 	}
-	s := fmt.Sprintf("https://t.me/%v?start=tornament-%v", bot, gameTournamentID)
+	s := fmt.Sprintf("https://t.me/%v?start=t-%v", bot, gameTournamentID)
 	if referral != "" {
 		s += "__ref-" + referral
 	}
