@@ -4,7 +4,9 @@ Emoji used in the project.
 🏆 - tropphy, prize
 📣 - megaphone, share
 💸 - money with wings
+💵 - dollar banknotes
 🔓 - unlocked, open lock
 🎮 - game joystick
 📇 - card index (list)
 🔙 - back arrow
+➕ - heavy plus sign
