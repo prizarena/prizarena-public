@@ -4,6 +4,7 @@ import (
 	"strings"
 	"strconv"
 	"fmt"
+	"github.com/prizarena/prizarena-public/pamodels"
 )
 
 const MonthlyTournamentIDFormat = "200601"
@@ -16,7 +17,7 @@ type TournamentDto struct {
 }
 
 type NewTournamentResponse struct {
-	Tournament TournamentDto
+	Tournament pamodels.Tournament
 }
 
 // IsMonthlyTournamentID returns true if

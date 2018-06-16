@@ -10,3 +10,4 @@ Emoji used in the project.
 📇 - card index (list)
 🔙 - back arrow
 ➕ - heavy plus sign
+🔄 - refresh

@@ -1,5 +1,7 @@
 package prizarena_interfaces
 
+import "github.com/prizarena/prizarena-public/pamodels"
+
 //go:generate ffjson $GOFILE
 
 type Impact struct {
@@ -15,18 +17,8 @@ type PlayCompletedPayload struct {
 }
 
 type PlayCompletedResponse struct {
-	Tournament PlayCompletedTournament
-}
-
-type PlayCompletedTournament struct {
-	TournamentDto
-	TournamentStats
+	Tournament pamodels.Tournament
 	Players []ContestantStats `json:",omitempty"`
-}
-
-type TournamentStats struct {
-	ContestantsCount int
-	PlaysCount       int
 }
 
 type ContestantStats struct {

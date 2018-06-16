@@ -1,9 +1,9 @@
-package papbot
+package pabot
 
 import (
 	"github.com/strongo/bots-framework/core"
 	"strings"
-	"github.com/strongo/log"
+			"github.com/prizarena/prizarena-public/pamodels"
 )
 
 const onStartTournamentCode = "PapOnStartTournament"
@@ -21,12 +21,21 @@ func OnStartIfTournamentLink(whc bots.WebhookContext) (m bots.MessageFromBot, er
 	if strings.HasPrefix(text, "/start ") {
 		text = text[7:]
 	}
-	if !strings.HasPrefix(text,"t-") {
+	if !strings.HasPrefix(text, "t-") {
 		return
 	}
 	tournamentID := strings.Split(text, "__")[0][2:]
 	c := whc.Context()
-	log.Debugf(c, "tournamentID")
-	m.Text = "Tournament ID: " + tournamentID
+
+	var tournament pamodels.Tournament
+
+	httpClient := whc.BotContext().BotHost.GetHTTPClient(c)
+	if tournament, err = newPrizarenaApiClient(httpClient).GetTournament(c, tournamentID); err != nil {
+		return
+	}
+
+	if m, err = RenderTournamentCard(whc, TournamentCardModeNewMessage, tournament); err != nil {
+		return
+	}
 	return
 }
