@@ -94,7 +94,7 @@ func RenderTournamentCard(whc bots.WebhookContext, cardMode TournamentCardMode, 
 		fmt.Fprintln(text, "Games played:", tournament.CountOfPlaysCompleted)
 	}
 	if cardMode == TournamentCardModeEditCallbackMessage {
-		fmt.Fprintf(text, "\n<i>last upated at %v</i>", time.Now().Format("15:04"))
+		fmt.Fprintf(text, "\n<i>last upated at %v</i>", time.Now().Format("15:04:05"))
 	}
 	m.Text = text.String()
 	if m.Keyboard, err = getTournamentInGameTelegramKeyboard(whc, cardMode, tournament); err != nil {
