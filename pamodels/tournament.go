@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-var TournamentKind = "ArenaTournament"
+var TournamentKind = "Tournament"
 
 type TournamentSponsorshipEntity struct {
 	Sponsorship string `datastore:",noindex"`

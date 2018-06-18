@@ -36,7 +36,7 @@ func OnStartIfTournamentLink(whc bots.WebhookContext, gameID string) (m bots.Mes
 		return
 	}
 
-	if m, err = RenderTournamentCard(whc, TournamentCardModeNewMessage, tournament); err != nil {
+	if m, err = RenderTournamentCard(whc.Context(), TournamentCardModeNewMessage, tournament); err != nil {
 		return
 	}
 	return

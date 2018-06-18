@@ -26,7 +26,7 @@ var refreshTournamentCommand = bots.NewCallbackCommand(
 		if tournament, err = prizarenaApiClient.GetTournament(c, tournament.ID); err != nil {
 			return
 		}
-		m, err = RenderTournamentCard(whc, TournamentCardModeEditCallbackMessage, tournament)
+		m, err = RenderTournamentCard(whc.Context(), TournamentCardModeEditCallbackMessage, tournament)
 		return
 	},
 )

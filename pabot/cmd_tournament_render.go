@@ -8,6 +8,7 @@ import (
 	"time"
 	"bitbucket.org/asterus/prizarena-private/prizarena-server/papfacade"
 	"github.com/strongo/bots-api-telegram"
+	"context"
 )
 
 type TournamentCardMode int
@@ -18,8 +19,7 @@ const (
 	TournamentCardModeInlineQuery
 )
 
-func RenderTournamentCard(whc bots.WebhookContext, cardMode TournamentCardMode, tournament pamodels.Tournament) (m bots.MessageFromBot, err error) {
-	c := whc.Context()
+func RenderTournamentCard(c context.Context, cardMode TournamentCardMode, tournament pamodels.Tournament) (m bots.MessageFromBot, err error) {
 	m.IsEdit = cardMode == TournamentCardModeEditCallbackMessage
 	m.Format = bots.MessageFormatHTML
 	m.DisableWebPagePreview = true
@@ -97,13 +97,13 @@ func RenderTournamentCard(whc bots.WebhookContext, cardMode TournamentCardMode, 
 		fmt.Fprintf(text, "\n<i>last upated at %v</i>", time.Now().Format("15:04:05"))
 	}
 	m.Text = text.String()
-	if m.Keyboard, err = getTournamentInGameTelegramKeyboard(whc, cardMode, tournament); err != nil {
+	if m.Keyboard, err = getTournamentInGameTelegramKeyboard(c, cardMode, tournament); err != nil {
 		return
 	}
 	return
 }
 
-func getTournamentInGameTelegramKeyboard(_ bots.WebhookContext, _ TournamentCardMode, tournament pamodels.Tournament) (keyboard *tgbotapi.InlineKeyboardMarkup, err error) {
+func getTournamentInGameTelegramKeyboard(c context.Context, _ TournamentCardMode, tournament pamodels.Tournament) (keyboard *tgbotapi.InlineKeyboardMarkup, err error) {
 	switchInlineQueryShare := "share?tournament=" + tournament.ID
 	switchInlineQueryPlay := "play?tournament=" + tournament.ID
 	keyboard = tgbotapi.NewInlineKeyboardMarkup(
