@@ -104,11 +104,17 @@ func RenderTournamentCard(whc bots.WebhookContext, cardMode TournamentCardMode, 
 }
 
 func getTournamentInGameTelegramKeyboard(_ bots.WebhookContext, _ TournamentCardMode, tournament pamodels.Tournament) (keyboard *tgbotapi.InlineKeyboardMarkup, err error) {
-	switchInlineQuery := "tournament=" + tournament.ID
-	keyboard = tgbotapi.NewInlineKeyboardMarkup()
-	keyboard.InlineKeyboard = append(keyboard.InlineKeyboard,
+	switchInlineQueryShare := "share?tournament=" + tournament.ID
+	switchInlineQueryPlay := "play?tournament=" + tournament.ID
+	keyboard = tgbotapi.NewInlineKeyboardMarkup(
 		[]tgbotapi.InlineKeyboardButton{
-			{Text: "✈ Share in Telegram", SwitchInlineQuery: &switchInlineQuery},
+			{Text: "⚔ Play against friend", SwitchInlineQuery: &switchInlineQueryShare},
+		},
+		[]tgbotapi.InlineKeyboardButton{
+			{Text: "👽 Play against stranger", SwitchInlineQuery: &switchInlineQueryPlay},
+		},
+		[]tgbotapi.InlineKeyboardButton{
+			{Text: "✈ Share in Telegram", SwitchInlineQuery: &switchInlineQueryShare},
 		},
 	)
 

@@ -112,3 +112,18 @@ func (t Tournament) BeforeSave() error {
 	}
 	return nil
 }
+
+
+var ErrInvalidTournamentID = errors.New("invalid tournament ID")
+
+
+func VerifyIsFullTournamentID(v string) error {
+	if i := strings.Index(v, ":"); i < 0 {
+		return errors.WithMessage(ErrInvalidTournamentID,"tournament ID should have ':' character.")
+	} else if i == 0 {
+		return errors.WithMessage(ErrInvalidTournamentID, "tournament ID should have game ID before ':' character.")
+	} else if i == len(v)-1 {
+		return errors.WithMessage(ErrInvalidTournamentID, "tournament ID should have game tournament ID after ':' character.")
+	}
+	return nil
+}

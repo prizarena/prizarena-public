@@ -15,7 +15,7 @@ var OnStartTournament = bots.Command{
 	},
 }
 
-func OnStartIfTournamentLink(whc bots.WebhookContext) (m bots.MessageFromBot, err error) {
+func OnStartIfTournamentLink(whc bots.WebhookContext, gameID string) (m bots.MessageFromBot, err error) {
 	input := whc.Input().(bots.WebhookTextMessage)
 	text := input.Text()
 	if strings.HasPrefix(text, "/start ") {
@@ -24,13 +24,15 @@ func OnStartIfTournamentLink(whc bots.WebhookContext) (m bots.MessageFromBot, er
 	if !strings.HasPrefix(text, "t-") {
 		return
 	}
-	tournamentID := strings.Split(text, "__")[0][2:]
+	tournamentGameID := strings.Split(text, "__")[0][2:]
 	c := whc.Context()
 
 	var tournament pamodels.Tournament
 
+	tournamentFullID := gameID + ":" + tournamentGameID
+
 	httpClient := whc.BotContext().BotHost.GetHTTPClient(c)
-	if tournament, err = newPrizarenaApiClient(httpClient).GetTournament(c, tournamentID); err != nil {
+	if tournament, err = newPrizarenaApiClient(httpClient).GetTournament(c, tournamentFullID); err != nil {
 		return
 	}
 

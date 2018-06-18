@@ -11,3 +11,4 @@ Emoji used in the project.
 🔙 - back arrow
 ➕ - heavy plus sign
 🔄 - refresh
+👽 - alien, stranger

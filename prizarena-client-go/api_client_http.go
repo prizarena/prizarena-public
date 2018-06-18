@@ -40,6 +40,9 @@ type httpApiClient struct {
 var _ prizarena_interfaces.ApiClient = (*httpApiClient)(nil)
 
 func (apiClient httpApiClient) GetTournament(c context.Context, tournamentID string) (tournament pamodels.Tournament, err error) {
+	if err = pamodels.VerifyIsFullTournamentID(tournamentID); err != nil {
+		return
+	}
 	err = apiClient.get(ApiEndpointTournamentInfo, url.Values{"id": []string{tournamentID}}, &tournament)
 	return
 }

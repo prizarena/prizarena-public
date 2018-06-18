@@ -17,7 +17,9 @@ var refreshTournamentCommand = bots.NewCallbackCommand(
 	func(whc bots.WebhookContext, callbackUrl *url.URL) (m bots.MessageFromBot, err error) {
 		var tournament pamodels.Tournament
 		tournament.ID = callbackUrl.Query().Get("id")
-
+		if err = pamodels.VerifyIsFullTournamentID(tournament.ID); err != nil {
+			return
+		}
 		c := whc.Context()
 		httpClient := whc.BotContext().BotHost.GetHTTPClient(c)
 		prizarenaApiClient := newPrizarenaApiClient(httpClient)
