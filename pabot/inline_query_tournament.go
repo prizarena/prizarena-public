@@ -20,18 +20,15 @@ type InlineQueryMessageBuilder func(tournament pamodels.Tournament) (m bots.Mess
 func ProcessInlineQueryTournament(whc bots.WebhookContext, inlineQuery InlineQueryContext, gameID, tournamentParamName string, reply InlineQueryMessageBuilder) (m bots.MessageFromBot, err error) {
 	c := whc.Context()
 	var tournament pamodels.Tournament
-	if tournament.ID, err = GetValueFromUrl(inlineQuery.Text, tournamentParamName); err != nil {
+	if tournament.ID, err = GetQueryValueFromUrl(inlineQuery.Text, tournamentParamName); err != nil {
 		return
 	}
 	if tournament.ID == "" {
-		log.Debugf(c, "")
-		return
+		return reply(tournament)
 	}
 	tournament.ID = gameID + pamodels.TournamentIDSeparator + tournament.ID
 	log.Debugf(c, "tournament.ID: %v", tournament.ID)
-	httpClient := whc.BotContext().BotHost.GetHTTPClient(c)
-	apiClient := NewPrizarenaApiClient(httpClient)
-	cached := pacached.NewCached(apiClient)
+	cached := NewCachedApi(whc)
 	if tournament, err = cached.GetTournamentByID(c, tournament.ID); err != nil {
 		if db.IsNotFound(err) {
 			log.Debugf(c, err.Error())
@@ -43,7 +40,7 @@ func ProcessInlineQueryTournament(whc bots.WebhookContext, inlineQuery InlineQue
 	return reply(tournament)
 }
 
-func GetValueFromUrl(inlineQueryText, paramName string) (v string, err error) {
+func GetQueryValueFromUrl(inlineQueryText, paramName string) (v string, err error) {
 	if values, err := GetUrlValues(inlineQueryText); err != nil {
 		return "", err
 	} else if values != nil {
@@ -57,4 +54,11 @@ func GetUrlValues(s string) (values url.Values, err error) {
 		s = s[qIndex+1:]
 	}
 	return url.ParseQuery(s)
+}
+
+func NewCachedApi(whc bots.WebhookContext) pacached.Cached {
+	c := whc.Context()
+	httpClient := whc.BotContext().BotHost.GetHTTPClient(c)
+	apiClient := NewPrizarenaApiClient(httpClient)
+	return pacached.NewCached(apiClient)
 }

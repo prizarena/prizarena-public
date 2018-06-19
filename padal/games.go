@@ -27,7 +27,7 @@ func GetGameByID(c context.Context, gameID string) (game pamodels.Game, err erro
 
 var games = map[string]*pamodels.GameEntity{ // Just temporary
 	"rockpaperscissors": {
-		Name:  "Rock-Paper-Scissors 💎📄✂",
+		Name:  "Rock-Paper-Scissors 💎📄✂️",
 		TelegramBot: "playRockPaperScissorsBot",
 		Token: "r-p-s",
 	},
