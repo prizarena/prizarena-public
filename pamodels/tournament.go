@@ -16,7 +16,7 @@ const TournamentIDSeparator = ":"
 
 type TournamentSponsorshipEntity struct {
 	Sponsorship string `datastore:",noindex"`
-	IsSponsored bool
+	IsSponsored bool   `datastore:",omitempty"`
 	PotSizeUSD  decimal.Decimal64p2
 }
 

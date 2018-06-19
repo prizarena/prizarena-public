@@ -52,19 +52,28 @@ func RenderTournamentCard(c context.Context, cardMode TournamentCardMode, tourna
 
 	fmt.Fprintln(text, "\n<b>Status</b>:", tournament.Status)
 	if len(tournament.ExclusiveTo) > 0 {
-		fmt.Fprintln(text, "Ex exclusive to: %v", tournament.ExclusiveTo)
+		fmt.Fprintf(text, "Exclusive to: %v\n", tournament.ExclusiveTo)
 	}
 
 	if tournament.DurationDays > 0 {
-		fmt.Fprintf(text, "<b>Duration</b>: %d days\n", tournament.DurationDays)
-	}
-	const dtFormat = "2006-01-02 15:04"
-	if !tournament.Starts.IsZero() && !tournament.Ends.IsZero() {
-		fmt.Fprintf(text, "<b>Takes place</b>: from %v till %v\n", tournament.Starts.Format(dtFormat), tournament.Ends.Format(dtFormat))
-	} else if !tournament.Starts.IsZero() {
-		fmt.Fprintf(text, "<b>Takes place</b>: from %v\n", tournament.Starts.Format(dtFormat))
-	} else if !tournament.Ends.IsZero() {
-		fmt.Fprintf(text, "<b>Takes place</b>: till %v\n", tournament.Ends.Format(dtFormat))
+		fmt.Fprintf(text, "<b>Duration</b>: %d days", tournament.DurationDays)
+		const dtFormat = "2006-01-02 15:04"
+		now := time.Now()
+		if !tournament.Starts.IsZero() && !tournament.Ends.IsZero() {
+
+			if tournament.Starts.After(now) {
+				fmt.Fprintf(text, ", starts %v ", tournament.Starts.Format(dtFormat))
+			} else if tournament.Ends.After(now) {
+				fmt.Fprintf(text, ", ends %v ", tournament.Ends.Format(dtFormat))
+			} else if tournament.Ends.Before(now) {
+				fmt.Fprintf(text, ", was hold from %v till %v", tournament.Starts.Format(dtFormat), tournament.Ends.Format(dtFormat))
+			}
+		} else if !tournament.Starts.IsZero() {
+			fmt.Fprintf(text, ", starts</b>: %v", tournament.Starts.Format(dtFormat))
+		} else if !tournament.Ends.IsZero() {
+			fmt.Fprintf(text, ", ends</b>: %v", tournament.Ends.Format(dtFormat))
+		}
+		fmt.Fprintln(text, "")
 	}
 
 	if tournament.Sponsorship != "" {
@@ -89,10 +98,11 @@ func RenderTournamentCard(c context.Context, cardMode TournamentCardMode, tourna
 		}
 	}
 
-	if tournament.Status != "draft" {
-		fmt.Fprintln(text, "Contestants:", tournament.CountOfContestants)
-		fmt.Fprintln(text, "Games played:", tournament.CountOfPlaysCompleted)
-	}
+	//if tournament.Status != "draft" {
+	//	fmt.Fprintln(text, "Contestants:", tournament.CountOfContestants)
+	//	fmt.Fprintln(text, "Games played:", tournament.CountOfPlaysCompleted)
+	//}
+
 	m.Text = text.String()
 	if m.Keyboard, err = getTournamentInGameTelegramKeyboard(c, cardMode, tournament); err != nil {
 		return

@@ -19,6 +19,41 @@ type tournamentGaeDal struct {
 
 var _ padal.TournamentDal = (*tournamentGaeDal)(nil)
 
+func (tournamentGaeDal) GetUserTournaments(c context.Context, userID, orderBy string, limit int, keysOnly bool) (tournaments []pamodels.Tournament, err error) {
+	switch {
+	case limit <= 0:
+		limit = 20
+	case limit > 100:
+		limit = 100
+	}
+
+	query := datastore.NewQuery(pamodels.TournamentKind).Filter("CreatorUserID=", userID).Limit(limit)
+	if keysOnly {
+		query = query.KeysOnly()
+	}
+	query = query.Order(orderBy)
+	iterator := query.Run(c)
+	var entity *pamodels.TournamentEntity
+	for {
+		var key *datastore.Key
+		if !keysOnly {
+			entity = new(pamodels.TournamentEntity)
+		}
+		key, err = iterator.Next(entity)
+		if err != nil {
+			if err == datastore.Done {
+				err = nil
+			}
+			break
+		}
+		tournament := pamodels.Tournament{TournamentEntity: entity}
+		tournament.ID = key.StringID()
+		tournaments = append(tournaments, tournament)
+	}
+
+	return
+}
+
 func (tournamentGaeDal) FindStranger(c context.Context, tournamentID, userID string, ignoreIDs []string) (strangerUserID string, err error) {
 	log.Debugf(c, "tournamentGaeDal.FindStranger(tournamentID=%v, userID=%v, ignoreIDs=%v)", tournamentID, userID, ignoreIDs)
 	if tournamentID == "" {
