@@ -51,8 +51,8 @@ func RenderTournamentCard(c context.Context, cardMode TournamentCardMode, tourna
 	}
 
 	fmt.Fprintln(text, "\n<b>Status</b>:", tournament.Status)
-	if tournament.IsListed {
-		fmt.Fprintln(text, "Publicly listed at https://prizarena.com/tournaments")
+	if len(tournament.ExclusiveTo) > 0 {
+		fmt.Fprintln(text, "Ex exclusive to: %v", tournament.ExclusiveTo)
 	}
 
 	if tournament.DurationDays > 0 {

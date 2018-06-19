@@ -45,7 +45,7 @@ type TournamentEntity struct {
 	Ends                  time.Time                       `datastore:",omitempty"`
 	DurationDays          int                             `datastore:",noindex,omitempty"`
 	MinGamesToScore       int                             `datastore:",noindex,omitempty"`
-	IsListed              bool                            `datastore:",omitempty"`
+	ExclusiveTo           []string                        `datastore:",noindex"`
 	CountOfContestants    int                             `datastore:",noindex,omitempty"`
 	CountOfPlaysCompleted int                             `datastore:",noindex,omitempty"`
 	LastPlayIDs           slices.CommaSeparatedValuesList `datastore:",noindex,omitempty"`
@@ -129,5 +129,8 @@ func VerifyIsFullTournamentID(v string) error {
 }
 
 func (t Tournament) ShortTournamentID() string {
+	if t.ID == "" {
+		return ""
+	}
 	return t.ID[strings.Index(t.ID, TournamentIDSeparator)+1:]
 }
