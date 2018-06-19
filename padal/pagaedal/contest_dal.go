@@ -9,9 +9,9 @@ import (
 	"github.com/strongo/log"
 	"google.golang.org/appengine/datastore"
 	"time"
-	"github.com/prizarena/prizarena-public/padal"
 	"github.com/prizarena/prizarena-public/pamodels"
 	"github.com/prizarena/prizarena-public/prizarena-interfaces"
+	"github.com/prizarena/prizarena-public/padal"
 )
 
 type tournamentGaeDal struct {

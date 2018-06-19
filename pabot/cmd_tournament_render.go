@@ -93,9 +93,6 @@ func RenderTournamentCard(c context.Context, cardMode TournamentCardMode, tourna
 		fmt.Fprintln(text, "Contestants:", tournament.CountOfContestants)
 		fmt.Fprintln(text, "Games played:", tournament.CountOfPlaysCompleted)
 	}
-	if cardMode == TournamentCardModeEditCallbackMessage {
-		fmt.Fprintf(text, "\n<i>last upated at %v</i>", time.Now().Format("15:04:05"))
-	}
 	m.Text = text.String()
 	if m.Keyboard, err = getTournamentInGameTelegramKeyboard(c, cardMode, tournament); err != nil {
 		return
@@ -104,24 +101,25 @@ func RenderTournamentCard(c context.Context, cardMode TournamentCardMode, tourna
 }
 
 func getTournamentInGameTelegramKeyboard(c context.Context, _ TournamentCardMode, tournament pamodels.Tournament) (keyboard *tgbotapi.InlineKeyboardMarkup, err error) {
-	switchInlineQueryShare := "share?tournament=" + tournament.ID
-	switchInlineQueryPlay := "play?tournament=" + tournament.ID
+	shortTournamentID := tournament.ShortTournamentID()
+	switchInlineQueryTournament := "tournament?id=" + shortTournamentID
+	switchInlineQueryPlay := "play?tournament=" + shortTournamentID
 	keyboard = tgbotapi.NewInlineKeyboardMarkup(
 		[]tgbotapi.InlineKeyboardButton{
-			{Text: "⚔ Play against friend", SwitchInlineQuery: &switchInlineQueryShare},
+			{Text: "⚔ Play against friend", SwitchInlineQuery: &switchInlineQueryPlay},
 		},
 		[]tgbotapi.InlineKeyboardButton{
-			{Text: "👽 Play against stranger", SwitchInlineQuery: &switchInlineQueryPlay},
+			{Text: "👽 Play against stranger", CallbackData: "play-stranger?t=" + shortTournamentID},
 		},
 		[]tgbotapi.InlineKeyboardButton{
-			{Text: "✈ Share in Telegram", SwitchInlineQuery: &switchInlineQueryShare},
+			{Text: "✈ Share in Telegram", SwitchInlineQuery: &switchInlineQueryTournament},
 		},
 	)
 
 	if !tournament.IsSponsored {
 		keyboard.InlineKeyboard = append(keyboard.InlineKeyboard,
 			[]tgbotapi.InlineKeyboardButton{
-				{Text: "💵 Become a Sponsor", URL: "https://prizarena.com/become-a-sponsor?tournament=" + tournament.ID},
+				{Text: "💵 Become a Sponsor", URL: "https://t.me/prizarena_bot?start=sponsor__t-" + tournament.ID},
 			},
 		)
 	}

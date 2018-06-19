@@ -12,6 +12,8 @@ import (
 
 var TournamentKind = "Tournament"
 
+const TournamentIDSeparator = ":"
+
 type TournamentSponsorshipEntity struct {
 	Sponsorship string `datastore:",noindex"`
 	IsSponsored bool
@@ -37,6 +39,7 @@ type TournamentEntity struct {
 	Status                string
 	Name                  string                          `datastore:",noindex,omitempty"`
 	Note                  string                          `datastore:",noindex,omitempty"`
+	Cached                time.Time                       `datastore:",omitempty"`
 	Created               time.Time
 	Starts                time.Time
 	Ends                  time.Time                       `datastore:",omitempty"`
@@ -54,7 +57,6 @@ type Tournament struct {
 	db.StringID
 	*TournamentEntity
 }
-
 
 var _ db.EntityHolder = (*Tournament)(nil)
 
@@ -94,10 +96,10 @@ func (t Tournament) BeforeSave() error {
 	} else if strings.ContainsAny(t.Name, specialCharacter) {
 		return errors.New("tournament.Name is not allowed to contain special characters")
 	}
-	if strings.Contains(t.ID, ":") {
+	if strings.Contains(t.ID, TournamentIDSeparator) {
 		if t.GameID == "" {
 			return errors.New("tournament.GameID is a required field")
-		} else if t.GameID != strings.Split(t.ID, ":")[0] {
+		} else if t.GameID != strings.Split(t.ID, TournamentIDSeparator)[0] {
 			return errors.New("tournament.GameID does not match 1st part of tournament.ID")
 		}
 	} else if t.GameID != "" {
@@ -113,17 +115,19 @@ func (t Tournament) BeforeSave() error {
 	return nil
 }
 
-
 var ErrInvalidTournamentID = errors.New("invalid tournament ID")
 
-
 func VerifyIsFullTournamentID(v string) error {
-	if i := strings.Index(v, ":"); i < 0 {
-		return errors.WithMessage(ErrInvalidTournamentID,"tournament ID should have ':' character.")
+	if i := strings.Index(v, TournamentIDSeparator); i < 0 {
+		return errors.WithMessage(ErrInvalidTournamentID, "tournament ID should have ':' character.")
 	} else if i == 0 {
 		return errors.WithMessage(ErrInvalidTournamentID, "tournament ID should have game ID before ':' character.")
 	} else if i == len(v)-1 {
 		return errors.WithMessage(ErrInvalidTournamentID, "tournament ID should have game tournament ID after ':' character.")
 	}
 	return nil
+}
+
+func (t Tournament) ShortTournamentID() string {
+	return t.ID[strings.Index(t.ID, TournamentIDSeparator)+1:]
 }
