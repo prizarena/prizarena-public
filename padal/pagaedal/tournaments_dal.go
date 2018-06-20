@@ -31,7 +31,10 @@ func (tournamentGaeDal) GetUserTournaments(c context.Context, userID, orderBy st
 	if keysOnly {
 		query = query.KeysOnly()
 	}
-	query = query.Order(orderBy)
+	if orderBy != "" {
+		query = query.Order(orderBy)
+	}
+
 	iterator := query.Run(c)
 	var entity *pamodels.TournamentEntity
 	for {
