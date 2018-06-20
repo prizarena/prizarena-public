@@ -36,6 +36,8 @@ type TournamentEntity struct {
 	CreatorUserID         string
 	GameID                string
 	GameName              string                          `datastore:",noindex"`
+	TgBotChatID           int64                           `datastore:",noindex,omitempty"`
+	TgBotMsgID            int64                           `datastore:",noindex,omitempty"`
 	Status                string
 	Name                  string                          `datastore:",noindex,omitempty"`
 	Note                  string                          `datastore:",noindex,omitempty"`
