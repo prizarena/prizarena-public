@@ -53,6 +53,10 @@ type TournamentEntity struct {
 	LastPlayIDs           slices.CommaSeparatedValuesList `datastore:",noindex,omitempty"`
 }
 
+func (j TournamentEntity) IsExclusive() bool {
+	return len(j.ExclusiveTo) > 0
+}
+
 const TournamentStarID = "*"
 
 type Tournament struct {

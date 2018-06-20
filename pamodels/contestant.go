@@ -14,7 +14,7 @@ type ContestantEntity struct {
 	// Keep in private repository?
 	TimeJoined      time.Time
 	TournamentID    string
-	GameUserID      string
+	GameUserID      string    `datastore:",omitempty"` // can be empty when joining exclusive tournament from @prizarena_bot inline callback
 	PrizarenaUserID string    `datastore:",omitempty"`
 	StrangerCreated time.Time `datastore:",omitempty"`
 	StrangerPairing time.Time `datastore:",omitempty"`
