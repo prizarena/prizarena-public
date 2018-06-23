@@ -21,6 +21,7 @@ type GameEntity struct {
 	URL                      string              `datastore:",omitempty"`
 	PWA                      string              `datastore:",omitempty"`
 	TelegramBot              string              `datastore:",omitempty"`
+	GATrackingID string
 	Token                    string              `datastore:",omitempty"`
 	CountOfActiveTournaments int                 `datastore:",omitempty"`
 	CountOfClosedTournaments int                 `datastore:",omitempty"`
