@@ -9,7 +9,7 @@ import (
 
 var newPrizarenaApiClient func(httpClient *http.Client) prizarena_interfaces.ApiClient
 
-func InitPrizarenaBot(router bots.WebhooksRouter, prizarenaApiClientFactory func(httpClient *http.Client) prizarena_interfaces.ApiClient) {
+func InitPrizarenaBot(prizarenaGameID string, router bots.WebhooksRouter, prizarenaApiClientFactory func(httpClient *http.Client) prizarena_interfaces.ApiClient) {
 	if prizarenaApiClientFactory == nil {
 		panic("prizarenaApiClientFactory is required parameter")
 	}
@@ -17,6 +17,7 @@ func InitPrizarenaBot(router bots.WebhooksRouter, prizarenaApiClientFactory func
 	router.RegisterCommands(
 		[]bots.Command{
 			refreshTournamentCommand,
+			tournamentsCommand(prizarenaGameID),
 		},
 	)
 	pagaedal.RegisterDal()
