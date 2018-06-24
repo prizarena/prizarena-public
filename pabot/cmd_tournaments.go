@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"github.com/strongo/bots-api-telegram"
 	"github.com/strongo/app"
+	"net/url"
 )
 
 var TournamentsCommandCode = "tournaments"
@@ -12,7 +13,11 @@ var TournamentsCommandCode = "tournaments"
 func tournamentsCommand(prizarenaGameID string) bots.Command{
 	return bots.Command{
 		Code: TournamentsCommandCode,
+		Commands: []string{"/tournaments"},
 		Action: func(whc bots.WebhookContext) (m bots.MessageFromBot, err error) {
+			return tournamentsAction(whc, prizarenaGameID)
+		},
+		CallbackAction: func(whc bots.WebhookContext, callbackUrl *url.URL) (m bots.MessageFromBot, err error) {
 			return tournamentsAction(whc, prizarenaGameID)
 		},
 	}
