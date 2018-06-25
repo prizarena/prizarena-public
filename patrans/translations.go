@@ -1,5 +1,14 @@
 package patrans
 
+func RegisterTranslations(appTranslations map[string]map[string]string) {
+	for k, v := range TRANS {
+		if _, ok := appTranslations[k]; ok {
+			panic("duplicate")
+		}
+		appTranslations[k] = v
+	}
+}
+
 var TRANS = map[string]map[string]string{
 	NewTournamentButton: {
 		"en-US": "⚔ New tournament",
