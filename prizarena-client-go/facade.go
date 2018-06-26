@@ -27,7 +27,7 @@ func (facade facade) MakeMoveAgainstStranger(
 	if move == nil && onStranger == nil {
 		panic("Either 'move' or 'onStranger' should be defined.")
 	}
-	pairPayload := prizarena_interfaces.PairWithStrangerPayload{
+	pairPayload := prizarena_interfaces.PairWithStrangerRequest{
 		TournamentID: tournamentID,
 		GameUserID: gameUserID,
 	}

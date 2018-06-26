@@ -25,7 +25,7 @@ var TRANS = map[string]map[string]string{
 
 🏆 The winner is the one who defeats more opponents then any other participant.
 
-💵 From time to time there are sponsored tournaments with cash prizes.
+💵 From time to time there are sponsored tournaments with cash prizes. Get notified by subscribing to @prizarena channel.
 
 🆓 It's <b>free</b> to enter and to play in any tournament.
 
@@ -40,7 +40,7 @@ var TRANS = map[string]map[string]string{
 
 🏆 Победителем турнира становится тот кто победит наибольшее количество соперников.
 
-💵 Время от времени проводятся спосорские турниры с денежными призами.
+💵 Время от времени проводятся спосорские турниры с денежными призами. Узнавайте о таких турнирах подписавшись на канал @prizarena.
 
 🆓 Участие в турнирах абсолютно <b>бесплатно</b>.
 

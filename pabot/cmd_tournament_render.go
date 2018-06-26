@@ -119,7 +119,7 @@ func getTournamentInGameTelegramKeyboard(c context.Context, _ TournamentCardMode
 			{Text: "⚔ Play against friend", SwitchInlineQuery: &switchInlineQueryPlay},
 		},
 		[]tgbotapi.InlineKeyboardButton{
-			{Text: "👽 Play against stranger", CallbackData: "play-stranger?t=" + shortTournamentID},
+			{Text: "👽 Play against stranger", CallbackData: getPlayStrangerCallbackData(shortTournamentID)},
 		},
 		[]tgbotapi.InlineKeyboardButton{
 			{Text: "✈ Share in Telegram", SwitchInlineQuery: &switchInlineQueryTournament},

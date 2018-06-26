@@ -1,6 +1,6 @@
 package prizarena_interfaces
 
-type PairWithStrangerPayload struct {
+type PairWithStrangerRequest struct {
 	TournamentID string
 	GameUserID   string
 	Move         *MoveDto `json:",omitempty"`

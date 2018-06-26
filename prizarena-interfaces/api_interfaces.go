@@ -3,7 +3,7 @@ package prizarena_interfaces
 import (
 	"context"
 	"github.com/prizarena/prizarena-public/pamodels"
-)
+	)
 
 type ApiClient interface {
 	GetTournament(c context.Context, tournamentID string) (tournament pamodels.Tournament, err error)
@@ -11,7 +11,8 @@ type ApiClient interface {
 	NewTournament(c context.Context, newTournament NewTournamentPayload) (response NewTournamentResponse, err error)
 	PlayCompleted(c context.Context, payload PlayCompletedPayload) (response PlayCompletedResponse, err error)
 
-	PairWithStranger(c context.Context, payload PairWithStrangerPayload) (response PairWithStrangerResponse, err error)
+	PairWithStranger(c context.Context, payload PairWithStrangerRequest) (response PairWithStrangerResponse, err error)
 	PairedWithStranger(c context.Context, payload PairedWithStrangerPayload) (response PairedWithStrangerResponse, err error)
 }
 
+type ApiClientFactory func(c context.Context) ApiClient

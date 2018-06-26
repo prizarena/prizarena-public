@@ -8,6 +8,7 @@ import (
 	"strings"
 	"github.com/strongo/log"
 	"github.com/strongo/db"
+	"context"
 )
 
 type InlineQueryContext struct {
@@ -17,7 +18,7 @@ type InlineQueryContext struct {
 
 type InlineQueryMessageBuilder func(tournament pamodels.Tournament) (m bots.MessageFromBot, err error)
 
-func ProcessInlineQueryTournament(whc bots.WebhookContext, inlineQuery InlineQueryContext, gameID, tournamentParamName string, reply InlineQueryMessageBuilder) (m bots.MessageFromBot, err error) {
+func ProcessInlineQueryTournament(whc bots.WebhookContext, inlineQuery InlineQueryContext, prizarenaGameID, prizarenaToken, tournamentParamName string, reply InlineQueryMessageBuilder) (m bots.MessageFromBot, err error) {
 	c := whc.Context()
 	var tournament pamodels.Tournament
 	if tournament.ID, err = GetQueryValueFromUrl(inlineQuery.Text, tournamentParamName); err != nil {
@@ -26,9 +27,9 @@ func ProcessInlineQueryTournament(whc bots.WebhookContext, inlineQuery InlineQue
 	if tournament.ID == "" {
 		return reply(tournament)
 	}
-	tournament.ID = gameID + pamodels.TournamentIDSeparator + tournament.ID
+	tournament.ID = prizarenaGameID + pamodels.TournamentIDSeparator + tournament.ID
 	log.Debugf(c, "tournament.ID: %v", tournament.ID)
-	cached := NewCachedApi(whc)
+	cached := NewCachedApi(c, prizarenaGameID, prizarenaToken)
 	if tournament, err = cached.GetTournamentByID(c, tournament.ID); err != nil {
 		if db.IsNotFound(err) {
 			log.Debugf(c, err.Error())
@@ -56,9 +57,7 @@ func GetUrlValues(s string) (values url.Values, err error) {
 	return url.ParseQuery(s)
 }
 
-func NewCachedApi(whc bots.WebhookContext) pacached.Cached {
-	c := whc.Context()
-	httpClient := whc.BotContext().BotHost.GetHTTPClient(c)
-	apiClient := NewPrizarenaApiClient(httpClient)
+func NewCachedApi(c context.Context, prizarenaGameID, prizarenaToken string) pacached.Cached {
+	apiClient := newPrizarenaApiUrlfetchClient(c, "", prizarenaGameID, prizarenaToken)
 	return pacached.NewCached(apiClient)
 }

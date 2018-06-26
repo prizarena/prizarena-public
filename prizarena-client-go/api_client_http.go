@@ -58,7 +58,7 @@ func (apiClient httpApiClient) PlayCompleted(c context.Context, e prizarena_inte
 	return
 }
 
-func (apiClient httpApiClient) PairWithStranger(c context.Context, payload prizarena_interfaces.PairWithStrangerPayload) (response prizarena_interfaces.PairWithStrangerResponse, err error) {
+func (apiClient httpApiClient) PairWithStranger(c context.Context, payload prizarena_interfaces.PairWithStrangerRequest) (response prizarena_interfaces.PairWithStrangerResponse, err error) {
 	err = apiClient.post(ApiEndpointPairWithStranger, &payload, &response)
 	return
 }
