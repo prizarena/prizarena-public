@@ -10,6 +10,10 @@ func RegisterTranslations(appTranslations map[string]map[string]string) {
 }
 
 var TRANS = map[string]map[string]string{
+	ChallengeFriendCommandText: {
+		"en-US": "🤺 Challenge Telegram friend",
+		"ru-RU": "🤺 Новая игра в Telegram",
+	},
 	NewTournamentButton: {
 		"en-US": "⚔ New tournament",
 		"ru-RU": "⚔ Новый турнир",
