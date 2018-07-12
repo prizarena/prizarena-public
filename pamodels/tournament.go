@@ -135,8 +135,8 @@ func VerifyIsFullTournamentID(v string) error {
 }
 
 func (t Tournament) ShortTournamentID() string {
-	if t.ID == "" {
-		return ""
+	if sepIndex := strings.Index(t.ID, TournamentIDSeparator); sepIndex >= 0 {
+		return t.ID[sepIndex+1:]
 	}
-	return t.ID[strings.Index(t.ID, TournamentIDSeparator)+1:]
+	return t.ID
 }
