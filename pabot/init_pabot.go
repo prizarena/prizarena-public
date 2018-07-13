@@ -9,15 +9,17 @@ import (
 	"github.com/prizarena/prizarena-public/prizarena-client-go"
 )
 
+var GetPrizarenaApiClient func(c context.Context) prizarena_interfaces.ApiClient
+
 func InitPrizarenaInGameBot(prizarenaGameID, prizarenaToken string, router bots.WebhooksRouter) {
-	newPrizarenaApi := func(c context.Context) prizarena_interfaces.ApiClient {
+	GetPrizarenaApiClient = func(c context.Context) prizarena_interfaces.ApiClient {
 		return newPrizarenaApiUrlfetchClient(c, "", prizarenaGameID, prizarenaToken)
 	}
 	router.RegisterCommands(
 		[]bots.Command{
-			refreshTournamentCommand(newPrizarenaApi),
+			refreshTournamentCommand(GetPrizarenaApiClient),
 			tournamentsCommand(prizarenaGameID),
-			playStrangerCommand(newPrizarenaApi),
+			playStrangerCommand(GetPrizarenaApiClient),
 		},
 	)
 	pagaedal.RegisterDal()
