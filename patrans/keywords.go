@@ -11,4 +11,5 @@ const (
 
 	SinglePlayer = "SinglePlayer"
 	MultiPlayer  = "MultiPlayer"
+	PlayAgain    = "PlayAgain"
 )

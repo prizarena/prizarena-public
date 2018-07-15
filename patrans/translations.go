@@ -29,6 +29,15 @@ var TRANS = map[string]map[string]string{
 		"it-IT": emoji.RobotFace + " Giocatore singolo (AI)",
 		"fr-FR": emoji.RobotFace + " Un joueur (AI)",
 	},
+	PlayAgain: {
+		"en-US": emoji.RobotFace + " Play again (AI)",
+		"ru-RU": emoji.RobotFace + " Играть ещё раз (ИИ)",
+		"fa-IR": emoji.RobotFace + "تک نفره (AI)",
+		"es-ES": emoji.RobotFace + " Un solo jugador (AI)",   // TODO:
+		"de-DE": emoji.RobotFace + " Einzelspieler (AI)",     // TODO:
+		"it-IT": emoji.RobotFace + " Giocatore singolo (AI)", // TODO:
+		"fr-FR": emoji.RobotFace + " Un joueur (AI)",         // TODO:
+	},
 	// NewPlayWithAI: {
 	// 	"en-US": emoji.RobotFace + " Play against AI",
 	// 	"ru-RU": emoji.RobotFace + " Играть против компьютера",
