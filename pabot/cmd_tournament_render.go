@@ -1,7 +1,7 @@
 package pabot
 
 import (
-	"bitbucket.org/asterus/prizarena-private/prizarena-server/papfacade"
+	// "bitbucket.org/asterus/prizarena-private/prizarena-server/papfacade"
 	"bytes"
 	"context"
 	"fmt"
@@ -25,59 +25,60 @@ func RenderTournamentCard(c context.Context, cardMode TournamentCardMode, tourna
 	m.DisableWebPagePreview = true
 	text := new(bytes.Buffer)
 	if cardMode == TournamentCardModeInlineQuery {
-		fmt.Fprintf(text, `⚔ <b>Tournament</b>: <a href="https://t.me/prizarena_bot?start=%v">%v</a>`, tournament.ID, tournament.Name)
+		fmt.Fprintf(text, `⚔ <b>Tournament</b>: <a href="https://t.me/prizarena_bot?start=%v">%v</a>`, tournament.ID, tournament.Data.Name)
 		fmt.Fprint(text, "\n")
 	} else {
-		fmt.Fprintf(text, "⚔ <b>Tournament</b>: %v\n", tournament.Name)
+		fmt.Fprintf(text, "⚔ <b>Tournament</b>: %v\n", tournament.Data.Name)
 	}
 
 	{
-		gameName := tournament.GameName
+		gameName := tournament.Data.GameName
 		if gameName == "" {
-			gameName = tournament.GameID
+			gameName = tournament.Data.GameID
 		}
-		fmt.Fprintf(text, `🎮 <b>Game</b>: <a href="https://t.me/prizarena_bot?start=%v">%v</a>`, tournament.GameID, gameName)
+		fmt.Fprintf(text, `🎮 <b>Game</b>: <a href="https://t.me/prizarena_bot?start=%v">%v</a>`, tournament.Data.GameID, gameName)
 		fmt.Fprintln(text, "")
 	}
 
-	if tournament.Note != "" {
-		fmt.Fprintln(text, tournament.Note)
+	if tournament.Data.Note != "" {
+		fmt.Fprintln(text, tournament.Data.Note)
 	}
 
-	if (tournament.Status == "" || tournament.Status == "active") && !tournament.Ends.IsZero() && tournament.Ends.Before(time.Now()) {
-		if tournament, err = papfacade.Tournaments.CloseTournament(c, tournament.ID); err != nil {
-			return
-		}
+	if (tournament.Data.Status == "" || tournament.Data.Status == "active") && !tournament.Data.Ends.IsZero() && tournament.Data.Ends.Before(time.Now()) {
+		panic("not implemented yet")
+		//if tournament, err = papfacade.Tournaments.CloseTournament(c, tournament.ID); err != nil {
+		//	return
+		//}
 	}
 
-	fmt.Fprintln(text, "\n<b>Status</b>:", tournament.Status)
-	if len(tournament.ExclusiveTo) > 0 {
-		fmt.Fprintf(text, "Exclusive to: %v\n", tournament.ExclusiveTo)
+	fmt.Fprintln(text, "\n<b>Status</b>:", tournament.Data.Status)
+	if len(tournament.Data.ExclusiveTo) > 0 {
+		fmt.Fprintf(text, "Exclusive to: %v\n", tournament.Data.ExclusiveTo)
 	}
 
-	if tournament.DurationDays > 0 {
-		fmt.Fprintf(text, "<b>Duration</b>: %d days", tournament.DurationDays)
+	if tournament.Data.DurationDays > 0 {
+		fmt.Fprintf(text, "<b>Duration</b>: %d days", tournament.Data.DurationDays)
 		const dtFormat = "2006-01-02 15:04"
 		now := time.Now()
-		if !tournament.Starts.IsZero() && !tournament.Ends.IsZero() {
+		if !tournament.Data.Starts.IsZero() && !tournament.Data.Ends.IsZero() {
 
-			if tournament.Starts.After(now) {
-				fmt.Fprintf(text, ", starts %v ", tournament.Starts.Format(dtFormat))
-			} else if tournament.Ends.After(now) {
-				fmt.Fprintf(text, ", ends %v ", tournament.Ends.Format(dtFormat))
-			} else if tournament.Ends.Before(now) {
-				fmt.Fprintf(text, ", was hold from %v till %v", tournament.Starts.Format(dtFormat), tournament.Ends.Format(dtFormat))
+			if tournament.Data.Starts.After(now) {
+				fmt.Fprintf(text, ", starts %v ", tournament.Data.Starts.Format(dtFormat))
+			} else if tournament.Data.Ends.After(now) {
+				fmt.Fprintf(text, ", ends %v ", tournament.Data.Ends.Format(dtFormat))
+			} else if tournament.Data.Ends.Before(now) {
+				fmt.Fprintf(text, ", was hold from %v till %v", tournament.Data.Starts.Format(dtFormat), tournament.Data.Ends.Format(dtFormat))
 			}
-		} else if !tournament.Starts.IsZero() {
-			fmt.Fprintf(text, ", starts</b>: %v", tournament.Starts.Format(dtFormat))
-		} else if !tournament.Ends.IsZero() {
-			fmt.Fprintf(text, ", ends</b>: %v", tournament.Ends.Format(dtFormat))
+		} else if !tournament.Data.Starts.IsZero() {
+			fmt.Fprintf(text, ", starts</b>: %v", tournament.Data.Starts.Format(dtFormat))
+		} else if !tournament.Data.Ends.IsZero() {
+			fmt.Fprintf(text, ", ends</b>: %v", tournament.Data.Ends.Format(dtFormat))
 		}
 		fmt.Fprintln(text, "")
 	}
 
-	if tournament.Sponsorship != "" {
-		sponsorship := tournament.GetSponsorship()
+	if tournament.Data.Sponsorship != "" {
+		sponsorship := tournament.Data.GetSponsorship()
 		if sponsorship.Sponsor.Name != "" {
 			fmt.Fprintln(text, "<b>Sponsored by</b>:", sponsorship.Sponsor.Name)
 		}
@@ -126,7 +127,7 @@ func getTournamentInGameTelegramKeyboard(c context.Context, _ TournamentCardMode
 		},
 	)
 
-	if !tournament.IsSponsored {
+	if !tournament.Data.IsSponsored {
 		keyboard.InlineKeyboard = append(keyboard.InlineKeyboard,
 			[]tgbotapi.InlineKeyboardButton{
 				{Text: "💵 Become a Sponsor", URL: "https://t.me/prizarena_bot?start=sponsor__t-" + tournament.ID},
