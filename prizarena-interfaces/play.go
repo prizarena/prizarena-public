@@ -18,7 +18,7 @@ type PlayCompletedPayload struct {
 
 type PlayCompletedResponse struct {
 	Tournament pamodels.Tournament
-	Players []ContestantStats `json:",omitempty"`
+	Players    []ContestantStats `json:",omitempty"`
 }
 
 type ContestantStats struct {

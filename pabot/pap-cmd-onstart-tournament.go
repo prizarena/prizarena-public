@@ -1,9 +1,9 @@
 package pabot
 
 import (
+	"github.com/prizarena/prizarena-public/pamodels"
 	"github.com/strongo/bots-framework/core"
 	"strings"
-	"github.com/prizarena/prizarena-public/pamodels"
 )
 
 const onStartTournamentCode = "PapOnStartTournament"

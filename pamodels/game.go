@@ -1,10 +1,10 @@
 package pamodels
 
 import (
+	"fmt"
 	"github.com/strongo/db"
 	"github.com/strongo/decimal"
 	"strings"
-	"fmt"
 )
 
 const GameKind = "G"
@@ -17,11 +17,11 @@ type Game struct {
 var _ db.EntityHolder = (*Game)(nil)
 
 type GameEntity struct {
-	Name                     string              `datastore:",omitempty"`
-	URL                      string              `datastore:",omitempty"`
-	PWA                      string              `datastore:",omitempty"`
-	TelegramBot              string              `datastore:",omitempty"`
-	GATrackingID string
+	Name                     string `datastore:",omitempty"`
+	URL                      string `datastore:",omitempty"`
+	PWA                      string `datastore:",omitempty"`
+	TelegramBot              string `datastore:",omitempty"`
+	GATrackingID             string
 	Token                    string              `datastore:",omitempty"`
 	CountOfActiveTournaments int                 `datastore:",omitempty"`
 	CountOfClosedTournaments int                 `datastore:",omitempty"`

@@ -1,8 +1,8 @@
 package pagaedal
 
 import (
-	"testing"
 	"github.com/prizarena/prizarena-public/padal"
+	"testing"
 )
 
 func TestRegisterDal(t *testing.T) {

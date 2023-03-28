@@ -1,7 +1,7 @@
 package prizarena
 
 import (
-					"context"
+	"context"
 	"github.com/prizarena/prizarena-public/prizarena-interfaces"
 )
 
@@ -12,8 +12,6 @@ type facade struct {
 func NewFacade(apiClient prizarena_interfaces.ApiClient) facade {
 	return facade{apiClient: apiClient}
 }
-
-
 
 func (facade facade) MakeMoveAgainstStranger(
 	c context.Context,
@@ -29,10 +27,10 @@ func (facade facade) MakeMoveAgainstStranger(
 	}
 	pairPayload := prizarena_interfaces.PairWithStrangerRequest{
 		TournamentID: tournamentID,
-		GameUserID: gameUserID,
+		GameUserID:   gameUserID,
 	}
 
-	response ,err := facade.apiClient.PairWithStranger(c, pairPayload)
+	response, err := facade.apiClient.PairWithStranger(c, pairPayload)
 	if err != nil {
 		return err
 	}
@@ -46,7 +44,7 @@ func (facade facade) MakeMoveAgainstStranger(
 			return err
 		}
 		pairedPayload := prizarena_interfaces.PairedWithStrangerPayload{
-			GameUserID: gameUserID,
+			GameUserID:      gameUserID,
 			RivalGameUserID: response.RivalGameUserID,
 		}
 

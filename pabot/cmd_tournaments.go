@@ -1,15 +1,15 @@
 package pabot
 
 import (
-	"github.com/strongo/bots-framework/core"
 	"bytes"
-	"github.com/strongo/bots-api-telegram"
-	"github.com/strongo/app"
-	"net/url"
 	"fmt"
-	"strings"
 	"github.com/prizarena/prizarena-public/patrans"
+	"github.com/strongo/app"
+	"github.com/strongo/bots-api-telegram"
+	"github.com/strongo/bots-framework/core"
 	"github.com/strongo/emoji/go/emoji"
+	"net/url"
+	"strings"
 )
 
 var TournamentsCommandCode = "tournaments"

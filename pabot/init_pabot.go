@@ -1,12 +1,12 @@
 package pabot
 
 import (
+	"context"
+	"github.com/prizarena/prizarena-public/padal/pagaedal"
+	"github.com/prizarena/prizarena-public/prizarena-client-go"
 	"github.com/prizarena/prizarena-public/prizarena-interfaces"
 	"github.com/strongo/bots-framework/core"
-	"github.com/prizarena/prizarena-public/padal/pagaedal"
-	"context"
 	"google.golang.org/appengine/urlfetch"
-	"github.com/prizarena/prizarena-public/prizarena-client-go"
 )
 
 var GetPrizarenaApiClient func(c context.Context) prizarena_interfaces.ApiClient

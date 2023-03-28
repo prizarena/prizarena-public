@@ -1,29 +1,28 @@
 package prizarena_interfaces
 
 import (
-	"time"
 	"github.com/strongo/decimal"
 	"net/url"
+	"time"
 )
 
 type NewTournamentPayload struct {
 	CreatorGameUserID string
-	Name string
-	Starts time.Time
-	Ends time.Time
+	Name              string
+	Starts            time.Time
+	Ends              time.Time
 }
 
 type Prize struct {
-	Name string
-	Medium string
+	Name     string
+	Medium   string
 	Currency string
-	Value decimal.Decimal64p2
+	Value    decimal.Decimal64p2
 }
 
 type Sponsor struct {
-	Name string
-	Url url.URL
-	Text string
+	Name  string
+	Url   url.URL
+	Text  string
 	Prize Prize
 }
-

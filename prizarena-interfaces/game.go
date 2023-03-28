@@ -1,6 +1,6 @@
 package prizarena_interfaces
 
 type Game struct {
-	ID string
+	ID   string
 	Name string
 }

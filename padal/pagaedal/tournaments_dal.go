@@ -1,17 +1,17 @@
 package pagaedal
 
 import (
-	"github.com/prizarena/greed-game/server-go/greedgame/dal"
-	"github.com/prizarena/greed-game/server-go/greedgame/models"
 	"context"
 	"github.com/pkg/errors"
 	"github.com/prizarena/arena/arena-go"
+	"github.com/prizarena/greed-game/server-go/greedgame/dal"
+	"github.com/prizarena/greed-game/server-go/greedgame/models"
+	"github.com/prizarena/prizarena-public/padal"
+	"github.com/prizarena/prizarena-public/pamodels"
+	"github.com/prizarena/prizarena-public/prizarena-interfaces"
 	"github.com/strongo/log"
 	"google.golang.org/appengine/datastore"
 	"time"
-	"github.com/prizarena/prizarena-public/pamodels"
-	"github.com/prizarena/prizarena-public/prizarena-interfaces"
-	"github.com/prizarena/prizarena-public/padal"
 )
 
 type tournamentGaeDal struct {

@@ -1,16 +1,16 @@
 package prizarena
 
 import (
-	"testing"
-	"net/http"
+	"bytes"
 	"context"
-	"github.com/prizarena/prizarena-public/prizarena-interfaces"
-	"net/http/httptest"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	"encoding/base64"
+	"github.com/prizarena/prizarena-public/prizarena-interfaces"
+	"net/http"
+	"net/http/httptest"
 	"strings"
-	"bytes"
+	"testing"
 )
 
 func TestNewHttpApiClientWithNilHttpClient(t *testing.T) {

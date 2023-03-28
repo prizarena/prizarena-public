@@ -1,12 +1,12 @@
 package padal
 
 import (
-	"github.com/strongo/db"
-		"github.com/strongo/app"
+	"github.com/strongo/app"
+	"github.com/strongo/dalgo/dal"
 )
 
 var (
-	DB db.Database
-	Tournament TournamentDal
+	DB                dal.Database
+	Tournament        TournamentDal
 	HandleWithContext strongo.HandleWithContext
 )

@@ -1,13 +1,13 @@
 package prizarena
 
 import (
-	"net/http"
-	"encoding/json"
-	"github.com/pkg/errors"
-	"fmt"
 	"bytes"
 	"encoding/base64"
+	"encoding/json"
+	"fmt"
+	"github.com/pkg/errors"
 	"io"
+	"net/http"
 	"net/url"
 )
 
@@ -54,10 +54,10 @@ func (apiClient httpApiClient) rpc(method, endpoint string, requestBody io.Reade
 			return
 		}
 	case http.StatusUnauthorized:
-		err = ErrUnauthorized;
+		err = ErrUnauthorized
 		return
 	case http.StatusForbidden:
-		err = ErrForbidden;
+		err = ErrForbidden
 		return
 	case http.StatusInternalServerError, http.StatusBadRequest:
 		errResp := ErrorResponse{}

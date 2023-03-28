@@ -1,14 +1,14 @@
 package pabot
 
 import (
-	"github.com/prizarena/prizarena-public/pamodels"
-	"fmt"
-	"github.com/strongo/bots-framework/core"
-	"bytes"
-	"time"
 	"bitbucket.org/asterus/prizarena-private/prizarena-server/papfacade"
-	"github.com/strongo/bots-api-telegram"
+	"bytes"
 	"context"
+	"fmt"
+	"github.com/prizarena/prizarena-public/pamodels"
+	"github.com/strongo/bots-api-telegram"
+	"github.com/strongo/bots-framework/core"
+	"time"
 )
 
 type TournamentCardMode int

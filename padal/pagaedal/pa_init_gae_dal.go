@@ -1,9 +1,9 @@
 package pagaedal
 
 import (
-	"github.com/strongo/db/gaedb"
-	"github.com/strongo/app/gaestandard"
 	"github.com/prizarena/prizarena-public/padal"
+	"github.com/strongo/app/gaestandard"
+	"github.com/strongo/db/gaedb"
 )
 
 func RegisterDal() {

@@ -1,7 +1,7 @@
 package prizarena
 
 import (
-		"github.com/prizarena/prizarena-public/pamodels"
+	"github.com/prizarena/prizarena-public/pamodels"
 )
 
 //go:generate ffjson $GOFILE
@@ -14,4 +14,3 @@ type ErrorResponse struct {
 type TournamentCompletedResponse struct {
 	Tournament pamodels.Tournament
 }
-

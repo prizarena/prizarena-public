@@ -3,7 +3,7 @@ package prizarena_interfaces
 import (
 	"context"
 	"github.com/prizarena/prizarena-public/pamodels"
-	)
+)
 
 type ApiClient interface {
 	GetTournament(c context.Context, tournamentID string) (tournament pamodels.Tournament, err error)

@@ -1,12 +1,12 @@
 package prizarena
 
 import (
-	"net/http"
 	"context"
+	"github.com/prizarena/prizarena-public/pamodels"
 	"github.com/prizarena/prizarena-public/prizarena-interfaces"
-	"strings"
-						"github.com/prizarena/prizarena-public/pamodels"
+	"net/http"
 	"net/url"
+	"strings"
 )
 
 const (

@@ -6,12 +6,12 @@ import (
 )
 
 var (
-	ErrUnauthorized = errors.New("unauthorized");
+	ErrUnauthorized = errors.New("unauthorized")
 	ErrForbidden    = errors.New("forbidden")
 )
 
 type apiError struct {
-	Code string
+	Code    string
 	Message string
 }
 

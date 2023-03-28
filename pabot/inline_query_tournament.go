@@ -1,14 +1,14 @@
 package pabot
 
 import (
-	"github.com/strongo/bots-framework/core"
-	"github.com/prizarena/prizarena-public/pamodels"
+	"context"
 	"github.com/prizarena/prizarena-public/pacached"
+	"github.com/prizarena/prizarena-public/pamodels"
+	bots "github.com/strongo/bots-framework/core"
+	"github.com/strongo/dalgo/dal"
+	"github.com/strongo/log"
 	"net/url"
 	"strings"
-	"github.com/strongo/log"
-	"github.com/strongo/db"
-	"context"
 )
 
 type InlineQueryContext struct {
@@ -31,7 +31,7 @@ func ProcessInlineQueryTournament(whc bots.WebhookContext, inlineQuery InlineQue
 	log.Debugf(c, "tournament.ID: %v", tournament.ID)
 	cached := NewCachedApi(c, prizarenaGameID, prizarenaToken)
 	if tournament, err = cached.GetTournamentByID(c, tournament.ID); err != nil {
-		if db.IsNotFound(err) {
+		if dal.IsNotFound(err) {
 			log.Debugf(c, err.Error())
 			err = nil
 			return

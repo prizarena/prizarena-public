@@ -1,0 +1,6 @@
+github.com/strongo/bots-framework v0.3.0 h1:VWTFrNpd3wTVNUm2FyUsEs0L513NC7dQjkxwjEttJQ0=
+github.com/strongo/bots-framework v0.3.0/go.mod h1:2+6+fsBpndB6NPAUPs+BxoMPWoiw+qCfdSblGpKemJk=
+github.com/strongo/decimal v0.0.0-20180523215323-a1521d8f65fa h1:AOb2mf7fUvA1CYS+J9+2arVJnugLoOMDRtuGePY/ijc=
+github.com/strongo/decimal v0.0.0-20180523215323-a1521d8f65fa/go.mod h1:YhdeiZouB+DobdQUZ2h5/VVAp7nvRFwh1FJ3rp/jsng=
+github.com/strongo/emoji v0.0.0-20180628223242-ca029fbd72ef h1:bMKmjTbRTgX1vXYQfatBM33Gnyr7NrMj/Byb1SR8bAI=
+github.com/strongo/emoji v0.0.0-20180628223242-ca029fbd72ef/go.mod h1:L7I5ikZykA4gVaokzZVDNKi3cOWoHxr3IUeY5P+tDbU=

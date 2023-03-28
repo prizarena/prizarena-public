@@ -1,10 +1,10 @@
 package pabot
 
 import (
-	"github.com/strongo/bots-framework/core"
-	"net/url"
 	"github.com/prizarena/prizarena-public/pamodels"
 	"github.com/prizarena/prizarena-public/prizarena-interfaces"
+	"github.com/strongo/bots-framework/core"
+	"net/url"
 )
 
 const refreshTournamentCommandCode = "refresh-tournament"

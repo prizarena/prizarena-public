@@ -1,18 +1,18 @@
 package prizarena_interfaces
 
 import (
-	"strings"
-	"strconv"
 	"fmt"
 	"github.com/prizarena/prizarena-public/pamodels"
+	"strconv"
+	"strings"
 )
 
 const MonthlyTournamentIDFormat = "200601"
 
 type TournamentDto struct {
-	ID string
-	Name string
-	GameID string
+	ID      string
+	Name    string
+	GameID  string
 	Sponsor Sponsor
 }
 

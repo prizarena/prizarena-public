@@ -1,11 +1,11 @@
 package pamodels
 
 import (
+	"fmt"
+	"github.com/prizarena/arena/arena-go"
 	"github.com/strongo/db"
 	"strings"
 	"time"
-	"fmt"
-	"github.com/prizarena/arena/arena-go"
 )
 
 var ContestantKind = "Contestant"
