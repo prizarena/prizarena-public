@@ -2,10 +2,12 @@ package pagaedal
 
 import (
 	"context"
+	"fmt"
 	"github.com/pkg/errors"
-	"github.com/prizarena/arena/arena-go"
-	"github.com/prizarena/greed-game/server-go/greedgame/dal"
-	"github.com/prizarena/greed-game/server-go/greedgame/models"
+	"github.com/prizarena/prizarena-public/facade4prizarena"
+
+	//"github.com/prizarena/greed-game/server-go/greedgame/dal"
+	//"github.com/prizarena/greed-game/server-go/greedgame/models"
 	"github.com/prizarena/prizarena-public/padal"
 	"github.com/prizarena/prizarena-public/pamodels"
 	"github.com/prizarena/prizarena-public/prizarena-interfaces"
@@ -49,7 +51,7 @@ func (tournamentGaeDal) GetUserTournaments(c context.Context, userID, orderBy st
 			}
 			break
 		}
-		tournament := pamodels.Tournament{TournamentEntity: entity}
+		tournament := pamodels.Tournament{Data: entity}
 		tournament.ID = key.StringID()
 		tournaments = append(tournaments, tournament)
 	}
@@ -94,14 +96,15 @@ OUTER:
 			}
 		}
 
-		var strangerUser models.User
-		if strangerUser, err = dal.User.GetUserByID(c, strangerUserID); err != nil {
+		strangerUser, err := facade4prizarena.GetUserByID(c, strangerUserID)
+		if err != nil {
 			break
 		}
 
-		if rivalBid := strangerUser.GetBattles().GetBattleByRivalID(arena.NewStrangerBattleID(tournamentID)); rivalBid != nil {
-			return // Stranger found
-		}
+		panic(fmt.Sprintf("not implmented yet: %v", strangerUser))
+		//if rivalBid := strangerUser.GetBattles().GetBattleByRivalID(arena.NewStrangerBattleID(tournamentID)); rivalBid != nil {
+		//	return // Stranger found
+		//}
 	}
 	strangerUserID = "" // Stranger not found
 	return

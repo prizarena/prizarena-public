@@ -2,7 +2,7 @@ package pamodels
 
 import (
 	"fmt"
-	"github.com/strongo/db"
+	"github.com/strongo/dalgo/record"
 	"github.com/strongo/decimal"
 	"strings"
 )
@@ -10,11 +10,11 @@ import (
 const GameKind = "G"
 
 type Game struct {
-	db.StringID
+	record.WithID[string]
 	*GameEntity
 }
 
-var _ db.EntityHolder = (*Game)(nil)
+//var _ db.EntityHolder = (*Game)(nil)
 
 type GameEntity struct {
 	Name                     string `datastore:",omitempty"`

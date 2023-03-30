@@ -5,7 +5,7 @@ import (
 	"github.com/prizarena/prizarena-public/padal"
 	"github.com/prizarena/prizarena-public/pamodels"
 	"github.com/prizarena/prizarena-public/prizarena-interfaces"
-	"github.com/strongo/db"
+	"github.com/strongo/dalgo/dal"
 	"github.com/strongo/log"
 	"time"
 )
@@ -31,7 +31,7 @@ func (wrapper cached) GetTournamentByID(c context.Context, id string) (tournamen
 		log.Warningf(c, "cached.GetTournamentByID() => padal.DB == nil")
 	} else {
 		err = padal.DB.Get(c, &tournament)
-		if !db.IsNotFound(err) {
+		if !dal.IsNotFound(err) {
 			if err != nil {
 				log.Warningf(c, "Failed to get tournament from local DB: %v", err)
 			} else if tournament.Cached.After(time.Now().Add(-time.Minute)) {

@@ -2,8 +2,8 @@ package pamodels
 
 import (
 	"fmt"
-	"github.com/prizarena/arena/arena-go"
-	"github.com/strongo/db"
+	"github.com/prizarena/arena/models4arena"
+	"github.com/strongo/dalgo/record"
 	"strings"
 	"time"
 )
@@ -18,15 +18,15 @@ type ContestantEntity struct {
 	PrizarenaUserID string    `datastore:",omitempty"`
 	StrangerCreated time.Time `datastore:",omitempty"`
 	StrangerPairing time.Time `datastore:",omitempty"`
-	arena.ContestantStats
+	models4arena.ContestantStats
 }
 
 type Contestant struct {
-	db.StringID
+	record.WithID[string]
 	*ContestantEntity
 }
 
-var _ db.EntityHolder = (*Contestant)(nil)
+//var _ db.EntityHolder = (*Contestant)(nil)
 
 type ContestantID string
 
@@ -47,11 +47,11 @@ func NewContestantID(tournamentID, userID string) string {
 	if count := strings.Count(tournamentID, ":"); count != 1 {
 		panic(fmt.Sprintf("tournamentID should contains exactly one ':' charater, got: %v", count))
 	}
-	vals := strings.Split(tournamentID, ":")
-	if vals[0] == "" {
+	v := strings.Split(tournamentID, ":")
+	if v[0] == "" {
 		panic("gameID is not specified")
 	}
-	if vals[1] == "" {
+	if v[1] == "" {
 		panic("gameTournamentID is not specified")
 	}
 	return tournamentID + contestantIdSeparator + userID
@@ -59,28 +59,6 @@ func NewContestantID(tournamentID, userID string) string {
 
 func NewContestant(tournamentID, userID string) Contestant {
 	return Contestant{
-		StringID: db.NewStrID(NewContestantID(tournamentID, userID)),
-	}
-}
-
-var _ db.EntityHolder = (*Contestant)(nil)
-
-func (Contestant) Kind() string {
-	return ContestantKind
-}
-
-func (Contestant) NewEntity() interface{} {
-	return new(ContestantEntity)
-}
-
-func (t Contestant) Entity() interface{} {
-	return t.ContestantEntity
-}
-
-func (t *Contestant) SetEntity(v interface{}) {
-	if v == nil {
-		t.ContestantEntity = nil
-	} else {
-		t.ContestantEntity = v.(*ContestantEntity)
+		//StringID: db.NewStrID(NewContestantID(tournamentID, userID)),
 	}
 }
