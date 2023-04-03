@@ -17,7 +17,8 @@ type TournamentDto struct {
 }
 
 type NewTournamentResponse struct {
-	Tournament pamodels.Tournament
+	ID         string
+	Tournament pamodels.TournamentWithID
 }
 
 // IsMonthlyTournamentID returns true if

@@ -30,20 +30,25 @@ func (wrapper cached) GetTournamentByID(c context.Context, id string) (tournamen
 	if padal.DB == nil {
 		log.Warningf(c, "cached.GetTournamentByID() => padal.DB == nil")
 	} else {
-		err = padal.DB.Get(c, &tournament)
+		err = padal.DB.Get(c, tournament.Record)
 		if !dal.IsNotFound(err) {
 			if err != nil {
 				log.Warningf(c, "Failed to get tournament from local DB: %v", err)
-			} else if tournament.Cached.After(time.Now().Add(-time.Minute)) {
+			} else if tournament.Data.Cached.After(time.Now().Add(-time.Minute)) {
 				return
 			}
 		}
 	}
 	tournament, err = wrapper.apiClient.GetTournament(c, id)
 	if padal.DB != nil {
-		tournament.Cached = time.Now()
+		tournament.Data.Cached = time.Now()
 		go func() {
-			padal.DB.Update(c, &tournament)
+			err := padal.DB.RunReadwriteTransaction(c, func(c context.Context, tx dal.ReadwriteTransaction) error {
+				return tx.Set(c, tournament.Record)
+			})
+			if err != nil {
+				log.Errorf(c, "Failed to save tournament to local DB: %v", err)
+			}
 		}()
 	}
 	return

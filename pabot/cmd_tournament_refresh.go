@@ -3,7 +3,7 @@ package pabot
 import (
 	"github.com/prizarena/prizarena-public/pamodels"
 	"github.com/prizarena/prizarena-public/prizarena-interfaces"
-	"github.com/strongo/bots-framework/core"
+	"github.com/strongo/bots-framework/botsfw"
 	"net/url"
 )
 
@@ -13,10 +13,10 @@ func refreshTournamentCallbackData(tournamentID string) string {
 	return refreshTournamentCommandCode + "?id=" + tournamentID
 }
 
-var refreshTournamentCommand = func(prizarenaApiFactory prizarena_interfaces.ApiClientFactory) bots.Command {
-	return bots.NewCallbackCommand(
+var refreshTournamentCommand = func(prizarenaApiFactory prizarena_interfaces.ApiClientFactory) botsfw.Command {
+	return botsfw.NewCallbackCommand(
 		refreshTournamentCommandCode,
-		func(whc bots.WebhookContext, callbackUrl *url.URL) (m bots.MessageFromBot, err error) {
+		func(whc botsfw.WebhookContext, callbackUrl *url.URL) (m botsfw.MessageFromBot, err error) {
 			var tournament pamodels.Tournament
 			tournament.ID = callbackUrl.Query().Get("id")
 			if err = pamodels.VerifyIsFullTournamentID(tournament.ID); err != nil {

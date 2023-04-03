@@ -6,7 +6,7 @@ import (
 	"github.com/prizarena/prizarena-public/patrans"
 	"github.com/strongo/app"
 	"github.com/strongo/bots-api-telegram"
-	"github.com/strongo/bots-framework/core"
+	"github.com/strongo/bots-framework/botsfw"
 	"github.com/strongo/emoji/go/emoji"
 	"net/url"
 	"strings"
@@ -14,14 +14,14 @@ import (
 
 var TournamentsCommandCode = "tournaments"
 
-func tournamentsCommand(prizarenaGameID string) bots.Command {
-	return bots.Command{
+func tournamentsCommand(prizarenaGameID string) botsfw.Command {
+	return botsfw.Command{
 		Code:     TournamentsCommandCode,
 		Commands: []string{"/" + TournamentsCommandCode},
-		Action: func(whc bots.WebhookContext) (m bots.MessageFromBot, err error) {
+		Action: func(whc botsfw.WebhookContext) (m botsfw.MessageFromBot, err error) {
 			return tournamentsAction(whc, prizarenaGameID)
 		},
-		CallbackAction: func(whc bots.WebhookContext, callbackUrl *url.URL) (m bots.MessageFromBot, err error) {
+		CallbackAction: func(whc botsfw.WebhookContext, callbackUrl *url.URL) (m botsfw.MessageFromBot, err error) {
 			return tournamentsAction(whc, prizarenaGameID)
 		},
 	}
@@ -56,11 +56,11 @@ func GetLangButtons(command, currentLang string) (row []tgbotapi.InlineKeyboardB
 	return
 }
 
-func tournamentsAction(whc bots.WebhookContext, prizarenaGameID string) (m bots.MessageFromBot, err error) {
+func tournamentsAction(whc botsfw.WebhookContext, prizarenaGameID string) (m botsfw.MessageFromBot, err error) {
 	s := new(bytes.Buffer)
 	s.WriteString(whc.Translate(patrans.TournamentsIntro))
 
-	m.Format = bots.MessageFormatHTML
+	m.Format = botsfw.MessageFormatHTML
 	m.Text = s.String()
 	m.IsEdit = true
 	m.Keyboard = tgbotapi.NewInlineKeyboardMarkup(

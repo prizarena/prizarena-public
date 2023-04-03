@@ -2,24 +2,24 @@ package pabot
 
 import (
 	"github.com/prizarena/prizarena-public/pamodels"
-	"github.com/strongo/bots-framework/core"
+	"github.com/strongo/bots-framework/botsfw"
 	"strings"
 )
 
 const onStartTournamentCode = "PapOnStartTournament"
 
-var OnStartTournament = bots.Command{
+var OnStartTournament = botsfw.Command{
 	Code: onStartTournamentCode,
-	Action: func(whc bots.WebhookContext) (m bots.MessageFromBot, err error) {
+	Action: func(whc botsfw.WebhookContext) (m botsfw.MessageFromBot, err error) {
 		return
 	},
 }
 
-func OnStartIfTournamentLink(whc bots.WebhookContext, prizarenaGameID, prizarenaToken string) (m bots.MessageFromBot, err error) {
-	if whc.InputType() != bots.WebhookInputText {
+func OnStartIfTournamentLink(whc botsfw.WebhookContext, prizarenaGameID, prizarenaToken string) (m botsfw.MessageFromBot, err error) {
+	if whc.InputType() != botsfw.WebhookInputText {
 		return
 	}
-	input := whc.Input().(bots.WebhookTextMessage)
+	input := whc.Input().(botsfw.WebhookTextMessage)
 	text := input.Text()
 	if strings.HasPrefix(text, "/start ") {
 		text = text[7:]

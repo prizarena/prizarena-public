@@ -29,6 +29,11 @@ func (entity TournamentSponsorshipEntity) GetSponsorship() (v TournamentSponsors
 	return
 }
 
+type TournamentWithID struct {
+	ID string
+	TournamentEntity
+}
+
 type TournamentEntity struct {
 	TournamentSponsorshipEntity
 	CreatorGameUserID     string `datastore:",omitempty"`

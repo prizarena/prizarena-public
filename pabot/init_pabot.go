@@ -5,18 +5,18 @@ import (
 	"github.com/prizarena/prizarena-public/padal/pagaedal"
 	"github.com/prizarena/prizarena-public/prizarena-client-go"
 	"github.com/prizarena/prizarena-public/prizarena-interfaces"
-	"github.com/strongo/bots-framework/core"
+	"github.com/strongo/bots-framework/botsfw"
 	"google.golang.org/appengine/urlfetch"
 )
 
 var GetPrizarenaApiClient func(c context.Context) prizarena_interfaces.ApiClient
 
-func InitPrizarenaInGameBot(prizarenaGameID, prizarenaToken string, router bots.WebhooksRouter) {
+func InitPrizarenaInGameBot(prizarenaGameID, prizarenaToken string, router botsfw.WebhooksRouter) {
 	GetPrizarenaApiClient = func(c context.Context) prizarena_interfaces.ApiClient {
 		return newPrizarenaApiUrlfetchClient(c, "", prizarenaGameID, prizarenaToken)
 	}
 	router.RegisterCommands(
-		[]bots.Command{
+		[]botsfw.Command{
 			refreshTournamentCommand(GetPrizarenaApiClient),
 			tournamentsCommand(prizarenaGameID),
 			playStrangerCommand(GetPrizarenaApiClient),

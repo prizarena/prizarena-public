@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/prizarena/prizarena-public/pacached"
 	"github.com/prizarena/prizarena-public/pamodels"
-	bots "github.com/strongo/bots-framework/core"
+	"github.com/strongo/bots-framework/botsfw"
 	"github.com/strongo/dalgo/dal"
 	"github.com/strongo/log"
 	"net/url"
@@ -16,9 +16,9 @@ type InlineQueryContext struct {
 	Text string
 }
 
-type InlineQueryMessageBuilder func(tournament pamodels.Tournament) (m bots.MessageFromBot, err error)
+type InlineQueryMessageBuilder func(tournament pamodels.Tournament) (m botsfw.MessageFromBot, err error)
 
-func ProcessInlineQueryTournament(whc bots.WebhookContext, inlineQuery InlineQueryContext, prizarenaGameID, prizarenaToken, tournamentParamName string, reply InlineQueryMessageBuilder) (m bots.MessageFromBot, err error) {
+func ProcessInlineQueryTournament(whc botsfw.WebhookContext, inlineQuery InlineQueryContext, prizarenaGameID, prizarenaToken, tournamentParamName string, reply InlineQueryMessageBuilder) (m botsfw.MessageFromBot, err error) {
 	c := whc.Context()
 	var tournament pamodels.Tournament
 	if tournament.ID, err = GetQueryValueFromUrl(inlineQuery.Text, tournamentParamName); err != nil {

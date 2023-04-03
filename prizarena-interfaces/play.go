@@ -17,7 +17,7 @@ type PlayCompletedPayload struct {
 }
 
 type PlayCompletedResponse struct {
-	Tournament pamodels.Tournament
+	Tournament pamodels.TournamentWithID
 	Players    []ContestantStats `json:",omitempty"`
 }
 

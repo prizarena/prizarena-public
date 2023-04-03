@@ -3,7 +3,7 @@ package pabot
 import (
 	"github.com/prizarena/prizarena-public/pamodels"
 	"github.com/prizarena/prizarena-public/prizarena-interfaces"
-	"github.com/strongo/bots-framework/core"
+	"github.com/strongo/bots-framework/botsfw"
 	"net/url"
 )
 
@@ -13,9 +13,9 @@ func getPlayStrangerCallbackData(tournamentID string) string {
 	return playStrangerCommandCode + "?tournament=" + tournamentID
 }
 
-func playStrangerCommand(prizarenaApiClientFactory prizarena_interfaces.ApiClientFactory) bots.Command {
-	return bots.NewCallbackCommand(playStrangerCommandCode,
-		func(whc bots.WebhookContext, callbackUrl *url.URL) (m bots.MessageFromBot, err error) {
+func playStrangerCommand(prizarenaApiClientFactory prizarena_interfaces.ApiClientFactory) botsfw.Command {
+	return botsfw.NewCallbackCommand(playStrangerCommandCode,
+		func(whc botsfw.WebhookContext, callbackUrl *url.URL) (m botsfw.MessageFromBot, err error) {
 			c := whc.Context()
 			var tournament pamodels.Tournament
 			// // tournament.ID = prizarenaGameID + pamodels.TournamentIDSeparator + callbackUrl.Query().Get("tournament")

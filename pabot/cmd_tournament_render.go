@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"github.com/prizarena/prizarena-public/pamodels"
 	"github.com/strongo/bots-api-telegram"
-	"github.com/strongo/bots-framework/core"
+	"github.com/strongo/bots-framework/botsfw"
 	"time"
 )
 
@@ -19,9 +19,9 @@ const (
 	TournamentCardModeInlineQuery
 )
 
-func RenderTournamentCard(c context.Context, cardMode TournamentCardMode, tournament pamodels.Tournament) (m bots.MessageFromBot, err error) {
+func RenderTournamentCard(c context.Context, cardMode TournamentCardMode, tournament pamodels.Tournament) (m botsfw.MessageFromBot, err error) {
 	m.IsEdit = cardMode == TournamentCardModeEditCallbackMessage
-	m.Format = bots.MessageFormatHTML
+	m.Format = botsfw.MessageFormatHTML
 	m.DisableWebPagePreview = true
 	text := new(bytes.Buffer)
 	if cardMode == TournamentCardModeInlineQuery {
